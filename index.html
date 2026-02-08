@@ -220,6 +220,71 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* Modal Overlay pour l'agrandissement d'image */
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Caché par défaut */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        #modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        #modal-image {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        #modal-close:hover,
+        #modal-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -242,7 +307,6 @@
     </div>
 
     <script>
-        // Images avec dégradés bleu-blanc fluides
         const images = [
             "images/PXL_20260208_125228505.PORTRAIT.jpg",
             "images/PXL_20260208_125230101.PORTRAIT.jpg",
@@ -359,8 +423,7 @@
             "images/PXL_20260208_172241456.jpg",
             "images/PXL_20260208_172244976.jpg",
             "images/PXL_20260208_172246367.jpg",
-            "images/PXL_20260208_172300057.jpg",
-            "images/PXL_2.jpg"
+            "images/PXL_20260208_172300057.jpg"
         ];
 
         function random(min, max) {
@@ -371,6 +434,11 @@
         const containerWidth = window.innerWidth;
         const containerHeight = window.innerHeight;
 
+        // Modal elements
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalImage = document.getElementById('modal-image');
+        const modalClose = document.getElementById('modal-close');
+
         images.forEach((src, index) => {
             const blob = document.createElement('div');
             blob.classList.add('photo-blob', 'animate');
@@ -378,6 +446,7 @@
             const img = document.createElement('img');
             img.src = src;
             img.alt = `Image ${index + 1}`;
+            img.loading = 'lazy'; // Lazy loading
             blob.appendChild(img);
 
             // Taille aléatoire
@@ -404,7 +473,28 @@
             const r4 = random(30, 70);
             blob.style.borderRadius = `${r1}% ${100 - r1}% ${r3}% ${100 - r3}% / ${r2}% ${r4}% ${100 - r4}% ${100 - r2}%`;
 
+            // Open modal on click
+            blob.addEventListener('click', () => {
+                modalImage.src = src;
+                modalOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+
             gallery.appendChild(blob);
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+
+        // Close modal when clicking outside the image
+        modalOverlay.addEventListener('click', (event) => {
+            if (event.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }
         });
 
         // Gestion du redimensionnement
@@ -426,5 +516,3 @@
             });
         });
     </script>
-</body>
-</html>
