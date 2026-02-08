@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie d'images</title>
+    <style>
+        /* ============================================
+           GALERIE FLUIDE - DESIGN BIOMORPHIQUE
+           Thème: Bleu et Blanc Fluide
+           ============================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #0066CC, #003366, #E6F2FF, #ffffff, #004080);
+            background-size: 400% 400%;
+            animation: gradientFlow 20s ease infinite;
+        }
+
+        /* Animation du gradient fluide */
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Conteneur principal */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* En-tête */
+        header {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 20;
+        }
+
+        .header-content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 1.2rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 50, 100, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .header-content:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #003366;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: #0066CC;
+            letter-spacing: 1px;
+            margin-top: 0.3rem;
+            font-weight: 300;
+        }
+
+        /* Galerie */
+        .gallery {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Blob de photo */
+        .photo-blob {
+            position: absolute;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 50, 100, 0.2);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-blob img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.9;
+            transition: transform 0.5s ease;
+        }
+
+        /* Animation de flottement et morphing */
+        @keyframes floatAndMorph {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(15px, -20px) rotate(1deg);
+            }
+            50% {
+                transform: translate(-10px, 15px) rotate(-1deg);
+            }
+            75% {
+                transform: translate(20px, 10px) rotate(0.5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        .photo-blob.animate {
+            animation: floatAndMorph var(--duration) ease-in-out var(--delay) infinite;
+        }
+
+        /* Effet de survol */
+        .photo-blob:hover {
+            z-index: 100 !important;
+            transform: scale(1.3) !important;
+            box-shadow: 0 25px 60px rgba(0, 80, 160, 0.4);
+            border-color: rgba(255, 255, 255, 0.8);
+            animation: none !important;
+        }
+
+        .photo-blob:hover img {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .photo-blob:hover {
+            border-radius: 25px !important;
+        }
+
+        /* Animation de respiration au survol */
+        @keyframes breathe {
+            0%, 100% {
+                box-shadow: 0 25px 60px rgba(0, 80, 160, 0.4);
+            }
+            50% {
+                box-shadow: 0 25px 80px rgba(0, 100, 200, 0.6);
+            }
+        }
+
+        .photo-blob:hover {
+            animation: breathe 1.5s ease-in-out infinite !important;
+        }
+
+        /* Pied de page */
+        footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 20;
+            font-size: 0.9rem;
+            color: rgba(0, 51, 102, 0.7);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .header-content {
+                padding: 1rem 1.5rem;
+            }
+
+            .photo-blob:hover {
+                transform: scale(1.15) !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1rem;
+            }
+
+            .header-content {
+                padding: 0.8rem 1.2rem;
+                top: 1rem;
+                left: 1rem;
+            }
+
+            footer {
+                font-size: 0.8rem;
+                bottom: 1rem;
+                left: 1rem;
+            }
+
+            .photo-blob:hover {
+                transform: scale(1.1) !important;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header>
+            <div class="header-content">
+                <h1>L'Eau & L'Air</h1>
+                <p class="subtitle">Galerie Fluide</p>
+            </div>
+        </header>
+
+        <!-- Galerie -->
+        <div class="gallery" id="gallery"></div>
+
+        <!-- Pied de page -->
+        <footer>
+            Survolez les images pour découvrir
+        </footer>
+    </div>
+
+    <script>
+        // Images avec dégradés bleu-blanc fluides
+        const images = [
+            "images/PXL_20260208_125228505.PORTRAIT.jpg",
+            "images/PXL_20260208_125230101.PORTRAIT.jpg",
+            "images/PXL_20260208_125233707.PORTRAIT.jpg",
+            "images/PXL_20260208_125234981.PORTRAIT.jpg",
+            "images/PXL_20260208_125237122.PORTRAIT.jpg",
+            "images/PXL_20260208_125243190.PORTRAIT.jpg",
+            "images/PXL_20260208_125245647.PORTRAIT.jpg",
+            "images/PXL_20260208_125247099.PORTRAIT.jpg",
+            "images/PXL_20260208_125255470.PORTRAIT.jpg",
+            "images/PXL_20260208_125256906.PORTRAIT.jpg",
+            "images/PXL_20260208_125259805.PORTRAIT.jpg",
+            "images/PXL_20260208_125304885.PORTRAIT.jpg",
+            "images/PXL_20260208_133711987.PORTRAIT.jpg",
+            "images/PXL_20260208_150919308.PORTRAIT.jpg",
+            "images/PXL_20260208_150921715.PORTRAIT.jpg",
+            "images/PXL_20260208_151705688.PORTRAIT.jpg",
+            "images/PXL_20260208_154452899.jpg",
+            "images/PXL_20260208_154528347.jpg",
+            "images/PXL_20260208_162626789.jpg",
+            "images/PXL_20260208_162629825.jpg",
+            "images/PXL_20260208_162631939.jpg",
+            "images/PXL_20260208_162635579.jpg",
+            "images/PXL_20260208_162654421.jpg",
+            "images/PXL_20260208_162659208.jpg",
+            "images/PXL_20260208_162705748.jpg",
+            "images/PXL_20260208_162718436.jpg",
+            "images/PXL_20260208_162736297.jpg",
+            "images/PXL_20260208_162746561.jpg",
+            "images/PXL_20260208_162850897.jpg",
+            "images/PXL_20260208_162852151.jpg",
+            "images/PXL_20260208_162903770.jpg",
+            "images/PXL_20260208_162906626.jpg",
+            "images/PXL_20260208_162907542.jpg",
+            "images/PXL_20260208_162924761.jpg",
+            "images/PXL_20260208_162929377.jpg",
+            "images/PXL_20260208_162932869.jpg",
+            "images/PXL_20260208_162937070.jpg",
+            "images/PXL_20260208_162938995.jpg",
+            "images/PXL_20260208_162953053.jpg",
+            "images/PXL_20260208_162955253.jpg",
+            "images/PXL_20260208_162957867.jpg",
+            "images/PXL_20260208_162959814.jpg",
+            "images/PXL_20260208_163001361.jpg",
+            "images/PXL_20260208_163002455.jpg",
+            "images/PXL_20260208_163017586.jpg",
+            "images/PXL_20260208_163045142.jpg",
+            "images/PXL_20260208_163142023.jpg",
+            "images/PXL_20260208_163200150.jpg",
+            "images/PXL_20260208_163220400.jpg",
+            "images/PXL_20260208_163226958.jpg",
+            "images/PXL_20260208_163229670.jpg",
+            "images/PXL_20260208_163231064.jpg",
+            "images/PXL_20260208_163301995.jpg",
+            "images/PXL_20260208_163343479.jpg",
+            "images/PXL_20260208_163506749.jpg",
+            "images/PXL_20260208_165002385.jpg",
+            "images/PXL_20260208_165009783.jpg",
+            "images/PXL_20260208_165011518.jpg",
+            "images/PXL_20260208_165012803.jpg",
+            "images/PXL_20260208_165022399.jpg",
+            "images/PXL_20260208_165039425.jpg",
+            "images/PXL_20260208_165041750.jpg",
+            "images/PXL_20260208_165049646.jpg",
+            "images/PXL_20260208_165050350.jpg",
+            "images/PXL_20260208_165051378.jpg",
+            "images/PXL_20260208_165053113.jpg",
+            "images/PXL_20260208_165121762.jpg",
+            "images/PXL_20260208_165144377.jpg",
+            "images/PXL_20260208_165254427.jpg",
+            "images/PXL_20260208_165256984.jpg",
+            "images/PXL_20260208_170923057.jpg",
+            "images/PXL_20260208_170939332.PORTRAIT.jpg",
+            "images/PXL_20260208_170942963.PORTRAIT.jpg",
+            "images/PXL_20260208_171027612.jpg",
+            "images/PXL_20260208_171029783.jpg",
+            "images/PXL_20260208_171040958.jpg",
+            "images/PXL_20260208_171045414.jpg",
+            "images/PXL_20260208_171046326.jpg",
+            "images/PXL_20260208_171048963.jpg",
+            "images/PXL_20260208_171053864.jpg",
+            "images/PXL_20260208_171058183.jpg",
+            "images/PXL_20260208_171106138.jpg",
+            "images/PXL_20260208_171111969.jpg",
+            "images/PXL_20260208_171134822.PORTRAIT.jpg",
+            "images/PXL_20260208_171138609.PORTRAIT.jpg",
+            "images/PXL_20260208_171139452.PORTRAIT.jpg",
+            "images/PXL_20260208_171140415.PORTRAIT.jpg",
+            "images/PXL_20260208_171208195.jpg",
+            "images/PXL_20260208_171250432.PORTRAIT.jpg",
+            "images/PXL_20260208_171252181.PORTRAIT.jpg",
+            "images/PXL_20260208_171304326.PORTRAIT.jpg",
+            "images/PXL_20260208_171305589.PORTRAIT.jpg",
+            "images/PXL_20260208_171546985.PORTRAIT.ORIGINAL.jpg",
+            "images/PXL_20260208_171549643.PORTRAIT.ORIGINAL.jpg",
+            "images/PXL_20260208_171612214.PORTRAIT.ORIGINAL.jpg",
+            "images/PXL_20260208_171637412.jpg",
+            "images/PXL_20260208_171644440.jpg",
+            "images/PXL_20260208_171650521.jpg",
+            "images/PXL_20260208_171654260.jpg",
+            "images/PXL_20260208_171701399.jpg",
+            "images/PXL_20260208_171705620.jpg",
+            "images/PXL_20260208_171741219.jpg",
+            "images/PXL_20260208_171746984.jpg",
+            "images/PXL_20260208_171751640.jpg",
+            "images/PXL_20260208_171756815.jpg",
+            "images/PXL_20260208_171803440.jpg",
+            "images/PXL_20260208_171808258.jpg",
+            "images/PXL_20260208_172044896.jpg",
+            "images/PXL_20260208_172230610.jpg",
+            "images/PXL_20260208_172232051.jpg",
+            "images/PXL_20260208_172234386.jpg",
+            "images/PXL_20260208_172239899.jpg",
+            "images/PXL_20260208_172241456.jpg",
+            "images/PXL_20260208_172244976.jpg",
+            "images/PXL_20260208_172246367.jpg",
+            "images/PXL_20260208_172300057.jpg",
+            "images/PXL_2.jpg"
+        ];
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const gallery = document.getElementById('gallery');
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
+
+        images.forEach((src, index) => {
+            const blob = document.createElement('div');
+            blob.classList.add('photo-blob', 'animate');
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Image ${index + 1}`;
+            blob.appendChild(img);
+
+            // Taille aléatoire
+            const size = random(120, 250);
+            blob.style.width = `${size}px`;
+            blob.style.height = `${size}px`;
+
+            // Position aléatoire
+            const posX = random(0, Math.max(0, containerWidth - size));
+            const posY = random(0, Math.max(0, containerHeight - size));
+            blob.style.left = `${posX}px`;
+            blob.style.top = `${posY}px`;
+
+            // Animation unique
+            const duration = random(12, 25);
+            const delay = random(-25, 0);
+            blob.style.setProperty('--duration', `${duration}s`);
+            blob.style.setProperty('--delay', `${delay}s`);
+
+            // Forme organique aléatoire
+            const r1 = random(30, 70);
+            const r2 = random(30, 70);
+            const r3 = random(30, 70);
+            const r4 = random(30, 70);
+            blob.style.borderRadius = `${r1}% ${100 - r1}% ${r3}% ${100 - r3}% / ${r2}% ${r4}% ${100 - r4}% ${100 - r2}%`;
+
+            gallery.appendChild(blob);
+        });
+
+        // Gestion du redimensionnement
+        window.addEventListener('resize', () => {
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            
+            document.querySelectorAll('.photo-blob').forEach(blob => {
+                const size = blob.offsetWidth;
+                const currentX = parseFloat(blob.style.left);
+                const currentY = parseFloat(blob.style.top);
+                
+                if (currentX + size > newWidth) {
+                    blob.style.left = `${Math.max(0, newWidth - size)}px`;
+                }
+                if (currentY + size > newHeight) {
+                    blob.style.top = `${Math.max(0, newHeight - size)}px`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

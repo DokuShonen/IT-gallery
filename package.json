@@ -1,0 +1,12 @@
+{
+  "name": "galerie-fluide-bleu-blanc",
+  "version": "1.0.0",
+  "description": "Galerie photo fluide bleu et blanc avec animations organiques",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build needed - static HTML'"
+  },
+  "keywords": ["galerie", "fluide", "bleu", "blanc", "animation"],
+  "author": "",
+  "license": "MIT"
+}
